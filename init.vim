@@ -6,6 +6,7 @@
 	" You can specify a custom plugin directory by passing it as the argument
 	"   - e.g. `call plug#begin('~/.vim/plugged')`
 	"   - Avoid using standard Vim directory names like 'plugin'
+
 	"Autocomplete
 
 	Plug 'neoclide/coc.nvim', { 'branch' : 'release' }
@@ -54,11 +55,19 @@ Plug '~/my-prototype-plugin'
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
 
-" Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+map <C-n> :call NERDTreeToggleAndRefresh()<CR>
 
-set number
+function NERDTreeToggleAndRefresh()
+  :NERDTreeToggle
+  if g:NERDTree.IsOpen()
+    :NERDTreeRefreshRoot
+  endif
+endfunction
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+set number relativenumber
 
 let g:gruvbox_italic=1
 colorscheme gruvbox
