@@ -11,6 +11,10 @@
 
 	Plug 'neoclide/coc.nvim', { 'branch' : 'release' }
 
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
+
 	"Theme
 
 	Plug 'morhetz/gruvbox'
@@ -56,6 +60,23 @@ Plug '~/my-prototype-plugin'
 call plug#end()
 
 map <C-n> :call NERDTreeToggleAndRefresh()<CR>
+
+map <C-t> :call Telescope()<CR>
+
+inoremap { {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
+
+
+map <C-j> o<ESC>k
+map <C-k> O<ESC>j
+
+function Telescope()
+	:Telescope
+endfunction
 
 function NERDTreeToggleAndRefresh()
   :NERDTreeToggle
