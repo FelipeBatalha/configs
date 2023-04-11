@@ -14,7 +14,8 @@
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
-
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
 	"Theme
 
 	Plug 'morhetz/gruvbox'
@@ -73,6 +74,9 @@ inoremap ` ``<Esc>ha
 
 map <C-j> o<ESC>k
 map <C-k> O<ESC>j
+
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 function Telescope()
 	:Telescope
