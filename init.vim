@@ -95,8 +95,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 set number relativenumber
 
 let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='hard'
+set background=dark
 colorscheme gruvbox
-
+hi Normal guibg=NONE ctermbg=NONE
 " You can revert the settings after the call like so:
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
