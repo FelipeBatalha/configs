@@ -35,7 +35,7 @@ default_border pixel 5
 default_floating_border pixel 1
 
 exec_always --no-startup-id /home/batalha/.config/polybar/launch2.sh
-exec_always --no-startup-id sudo picom -b --experimental-backends
+exec_always --no-startup-id picom -b --experimental-backends
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
