@@ -64,16 +64,25 @@ map <C-n> :call NERDTreeToggleAndRefresh()<CR>
 
 map <C-t> :call Telescope()<CR>
 
-inoremap { {}<Esc>ha
-inoremap ( ()<Esc>ha
-inoremap [ []<Esc>ha
-inoremap " ""<Esc>ha
-inoremap ' ''<Esc>ha
-inoremap ` ``<Esc>ha
+"inoremap { {}<Esc>ha
+"inoremap ( ()<Esc>ha
+"inoremap [ []<Esc>ha
+"inoremap " ""<Esc>ha
+"inoremap ' ''<Esc>ha
+"inoremap ` ``<Esc>ha
 
 
 map <C-j> o<ESC>k
 map <C-k> O<ESC>j
+
+nnoremap <down> :m .+1<CR>==
+nnoremap <up> :m .-2<CR>==
+
+inoremap <down> <Esc>:m .+1<CR>==gi
+inoremap <up> <Esc>:m .-2<CR>==gi
+
+vnoremap <down> :m '>+1<CR>gv=gv
+vnoremap <up> :m '<-2<CR>gv=gv
 
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
@@ -102,3 +111,34 @@ hi Normal guibg=NONE ctermbg=NONE
 " You can revert the settings after the call like so:
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
+
+" Terminal Function
+let g:term_buf = 0
+let g:term_win = 0
+function! TermToggle(height)
+    if win_gotoid(g:term_win)
+        hide
+    else
+        botright new
+        exec "resize " . a:height
+        try
+            exec "buffer " . g:term_buf
+        catch
+            call termopen($SHELL, {"detach": 0})
+            let g:term_buf = bufnr("")
+            set nonumber
+            set norelativenumber
+            set signcolumn=no
+        endtry
+        startinsert!
+        let g:term_win = win_getid()
+    endif
+endfunction
+ 
+" Toggle terminal on/off (neovim)
+nnoremap <c-t> :call TermToggle(12)<CR>
+ 
+" Terminal go back to normal mode
+tnoremap <Esc> <C-\><C-n>
+tnoremap :q! <C-\><C-t>:q!<CR>
+
