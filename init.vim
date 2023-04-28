@@ -87,6 +87,8 @@ vnoremap <up> :m '<-2<CR>gv=gv
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
+nnoremap ;; mqA;<ESC>`q 
+
 function Telescope()
 	:Telescope
 endfunction
