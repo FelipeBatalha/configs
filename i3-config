@@ -48,7 +48,7 @@ exec --no-startup-id nm-applet
 # keybinding to lock screen
 bindsym Control+Mod1+l exec "i3lock -i /home/batalha/.config/nvim/fallout-dc.png"
 bindsym Mod1+b exec "blueman-manager"
-
+bindsym Control+Mod1+f exec "flameshot gui"
 # auto lock the screen
 exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
 
