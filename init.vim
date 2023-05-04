@@ -25,8 +25,10 @@
 	Plug 'sheerun/vim-polyglot'
 
 	" Make sure you use single quotes
-	Plug 'preservim/nerdtree', { 'on' : 'NERDTreeToggle' }
-	" Esse plug trouxe links errados: Plug 'ryanoasis/vim-devicons'
+	"Plug 'preservim/nerdtree', { 'on' : 'NERDTreeToggle' }
+	Plug 'nvim-tree/nvim-tree.lua'
+	Plug 'nvim-tree/nvim-web-devicons'
+	Plug 'ryanoasis/vim-devicons'
 
 	" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 	Plug 'junegunn/vim-easy-align'
@@ -38,17 +40,9 @@
 	Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 	" On-demand loading
-	Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-	Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 	" Using a non-default branch
 	Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -60,16 +54,23 @@ Plug '~/my-prototype-plugin'
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
 
-map <C-n> :call NERDTreeToggleAndRefresh()<CR>
+lua << EOF
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+require("nvim-tree").setup()
+EOF
 
-map <C-t> :call Telescope()<CR>
+nnoremap <C-n> : NvimTreeToggle<CR>
+inoremap <C-e> <C-o>a
+nnoremap <C-f> : Telescope find_files<CR>
 
-"inoremap { {}<Esc>ha
-"inoremap ( ()<Esc>ha
-"inoremap [ []<Esc>ha
-"inoremap " ""<Esc>ha
-"inoremap ' ''<Esc>ha
-"inoremap ` ``<Esc>ha
+inoremap { {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
 
 
 map <C-j> o<ESC>k
@@ -80,28 +81,18 @@ nnoremap <up> :m .-2<CR>==
 
 inoremap <down> <Esc>:m .+1<CR>==gi
 inoremap <up> <Esc>:m .-2<CR>==gi
-
 vnoremap <down> :m '>+1<CR>gv=gv
 vnoremap <up> :m '<-2<CR>gv=gv
 
+inoremap <expr> <CR> coc#pum#visible() ? coc#pum#next(0) : "\<CR>"
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
-nnoremap ;; mqA;<ESC>`q 
+nnoremap ; mqA;<ESC>`q 
 
 function Telescope()
 	:Telescope
 endfunction
-
-function NERDTreeToggleAndRefresh()
-  :NERDTreeToggle
-  if g:NERDTree.IsOpen()
-    :NERDTreeRefreshRoot
-  endif
-endfunction
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 
 set number relativenumber
 
