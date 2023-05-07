@@ -36,6 +36,10 @@
 	" Any valid git URL is allowed
 	Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
+	"Wiki stuff	
+	Plug 'vimwiki/vimwiki'
+	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
+
 	" Multiple Plug commands can be written in a single line using | separators
 	Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -47,12 +51,25 @@
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
+" vimwiki - Personal Wiki for Vim
+" https://github.com/vimwiki/vimwiki
+set nocompatible
+filetype plugin on
+syntax on
+" vimwiki with markdown support
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" helppage -> :h vimwiki-syntax 
+
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+
+" vim-instant-markdown - Instant Markdown previews from Vim
+" https://github.com/suan/vim-instant-markdown
+let g:instant_markdown_autostart = 0	" disable autostart
+map <leader>md :InstantMarkdownPreview<CR>
 
 lua << EOF
 vim.g.loaded_netrw = 1
