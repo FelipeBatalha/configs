@@ -25,7 +25,7 @@ font pango:monospace 12
 
 #Add wallpaper and setup xrandr
 exec --no-startup-id xrandr --output HDMI-1 --primary --mode 1920x1080 --output eDP-1 --off
-exec --no-startup-id feh --bg-fill /home/batalha/Pictures/fallout-dc.png
+exec --no-startup-id feh --bg-fill /home/batalha/Pictures/spiderman.png
 
 # Configura o picom
 gaps inner 15
@@ -34,7 +34,7 @@ for_window [class="^.*"] border pixel 3
 default_border pixel 5 
 default_floating_border pixel 1
 
-exec_always --no-startup-id /home/batalha/.config/polybar/launch2.sh --none
+# exec_always --no-startup-id /home/batalha/.config/polybar/launch2.sh --none
 exec_always --no-startup-id picom -b --experimental-backends
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
@@ -46,8 +46,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
 # keybinding to lock screen
-bindsym Control+Mod1+l exec "i3lock -i /home/batalha/.config/nvim/fallout-dc.png"
+bindsym Control+Mod1+l exec "i3lock -i /home/batalha/Pictures/spiderman.png
 bindsym Mod1+b exec "blueman-manager"
+bindsym Control+Mod1+s exec "gnome-control-center"
 bindsym Control+Mod1+f exec "flameshot gui"
 # auto lock the screen
 exec "xautolock -detectsleep -time 5 -locker \"i3lock -c 000000\""
@@ -61,6 +62,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 
 # Use Mouse+$mod to drag floating windows to their wanted positio
 floating_modifier $mod
+for_window [class="obs"] resize set 800px 600px
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal -e zsh
@@ -203,12 +205,34 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#        position top
-#        status_command i3status
-#        mode hide
-#        hidden_state hide
-#        modifier Mod1
-#}
+bar {
+        position top
+        status_command i3status
+#       mode hide (hides the bar unless tab is pressed)
+        hidden_state hide
+        modifier Mod1
+        colors {
+            background #000000
+            statusline #ffffff 
+            separator #ffffff                
+
+            # Border, background and text color for a workspace button when the workspace has focus.
+            focused_workspace #187d4c #123524 #0f9956
+
+            # Border, background and text color for a workspace button when the workspace is active (visible) on some output, but the focus is on another one. You can only tell this apart from the focused workspace when you are using multiple monitors
+            active_workspace   #333333 #5f676a #ffffff
+
+            # Border, background and text color for a workspace button when the workspace does not have focus and is not active (visible) on any output. This will be the case for most workspaces
+            inactive_workspace #333333 #222222 #888888
+
+            # Border, background and text color for a workspace button when the workspace contains a window with the urgency hint set.
+            urgent_workspace   #2f343a #900000 #ffffff
+
+            # Border, background and text color for the binding mode indicator. If not used, the colors will be taken from urgent_workspace.
+            binding_mode       #2f343a #900000 #ffffff
+
+        }
+}
+client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
 

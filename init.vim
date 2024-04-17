@@ -19,15 +19,12 @@
 	"Theme
 
 	Plug 'morhetz/gruvbox'
-
+	Plug 'ThePrimeagen/vim-be-good'
 	" Multiple language support
 
 	Plug 'sheerun/vim-polyglot'
 
 	" Make sure you use single quotes
-	"Plug 'preservim/nerdtree', { 'on' : 'NERDTreeToggle' }
-	Plug 'nvim-tree/nvim-tree.lua'
-	Plug 'nvim-tree/nvim-web-devicons'
 	Plug 'ryanoasis/vim-devicons'
 
 	" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
@@ -72,17 +69,7 @@ let g:instant_markdown_autostart = 0	" disable autostart
 map <leader>md :InstantMarkdownPreview<CR>
 
 lua << EOF
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.opt.termguicolors = true
-require("nvim-tree").setup()
 EOF
-
-nnoremap <C-n> : NvimTreeToggle<CR>
-inoremap <C-e> <C-o>a
-nnoremap <C-f> : Telescope find_files<CR>
-
-inoremap { {}<Esc>ha
 inoremap ( ()<Esc>ha
 inoremap [ []<Esc>ha
 inoremap " ""<Esc>ha
@@ -105,11 +92,22 @@ inoremap <expr> <CR> coc#pum#visible() ? coc#pum#next(0) : "\<CR>"
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
-nnoremap ; mqA;<ESC>`q 
+" nnoremap ; mqA;<ESC>`q 
 
 function Telescope()
 	:Telescope
 endfunction
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 set number relativenumber
 
